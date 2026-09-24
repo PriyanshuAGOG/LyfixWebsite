@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   category: "technology",
 }
 
-export const viewport: Viewport = { themeColor: "#08080b", width: "device-width", initialScale: 1 }
+export const viewport: Viewport = { themeColor: "#090909", width: "device-width", initialScale: 1 }
 
 const schema = {
   "@context": "https://schema.org", "@type": "ProfessionalService", "@id": "https://lyfix.tech/#organization",

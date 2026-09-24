@@ -1,8 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <defs><radialGradient id="g" cx="72%" cy="38%"><stop stop-color="#6853ff"/><stop offset=".4" stop-color="#26203f"/><stop offset="1" stop-color="#08080b"/></radialGradient></defs>
-  <rect width="1200" height="630" fill="#08080b"/><rect width="1200" height="630" fill="url(#g)" opacity=".9"/>
-  <circle cx="930" cy="245" r="170" fill="none" stroke="#ddff3e" stroke-width="2"/><circle cx="930" cy="245" r="115" fill="none" stroke="#fff" opacity=".18"/><circle cx="930" cy="245" r="56" fill="#ddff3e"/>
-  <text x="70" y="90" fill="#ddff3e" font-family="Arial" font-size="27" font-weight="700">LYFIX TECHNOLOGIES</text>
-  <text x="70" y="300" fill="#fff" font-family="Arial" font-size="82" font-weight="700">BUSINESS,</text><text x="70" y="390" fill="#ddff3e" font-family="Arial" font-size="82" font-weight="700">FIXED FORWARD.</text>
-  <text x="72" y="515" fill="#fff" opacity=".62" font-family="Arial" font-size="24">CREATIVE × TECHNOLOGY × AI × OPERATIONS</text>
+  <defs><radialGradient id="g" cx="78%" cy="34%"><stop stop-color="#b88a58" stop-opacity=".66"/><stop offset=".36" stop-color="#302217" stop-opacity=".5"/><stop offset="1" stop-color="#090909" stop-opacity="0"/></radialGradient></defs>
+  <rect width="1200" height="630" fill="#090909"/><rect width="1200" height="630" fill="url(#g)"/>
+  <g stroke="#f1eee7" opacity=".09"><path d="M300 0v630M600 0v630M900 0v630"/></g>
+  <circle cx="954" cy="194" r="108" fill="none" stroke="#d8b183" opacity=".4"/><circle cx="954" cy="194" r="72" fill="none" stroke="#d8b183" opacity=".18"/>
+  <text x="64" y="78" fill="#d8b183" font-family="Arial" font-size="18" letter-spacing="5">LYFIX TECHNOLOGIES</text>
+  <text x="62" y="315" fill="#f1eee7" font-family="Georgia" font-size="92">We build businesses</text><text x="62" y="414" fill="#d8b183" font-family="Georgia" font-size="105" font-style="italic">worth noticing.</text>
+  <text x="66" y="548" fill="#f1eee7" opacity=".54" font-family="Arial" font-size="16" letter-spacing="3">CREATIVE · TECHNOLOGY · INTELLIGENCE · OPERATIONS</text>
 </svg>
