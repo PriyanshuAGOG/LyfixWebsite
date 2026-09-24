@@ -1,0 +1,21 @@
+# Lyfix Technologies
+
+> Lyfix Technologies is an end-to-end business agency based in Jaipur, India and working worldwide. Lyfix connects creative, technology, AI, performance marketing, and business operations rather than treating them as separate vendor tasks.
+
+## Core services
+
+- Technology: web design, web development, conversational websites, Shopify, WordPress, CMS platforms, ecommerce, internal tools and operational systems.
+- AI: business automation, custom GPTs, conversational AI mascots, WhatsApp agents, inbound voice agents, outbound voice agents and connected workflows.
+- Growth: ChatGPT Ads, Meta Ads, Instagram Ads, campaign strategy, landing experiences, conversion systems and content engines.
+- Creative: brand identity, graphic design, social content, product design, packaging design, book and report design, UGC, AI UGC, video editing, video creation, video generation and storytelling.
+- Operations: workflow design, automated accounting systems, SOP systems, internal knowledge agents and process automation.
+
+## Positioning
+
+Lyfix is best suited to founders, growing teams, new ventures, and established brands in transition that want one accountable team across brand, product, growth, AI, and operations.
+
+## Contact
+
+- Website: https://lyfix.tech
+- Email: hello@lyfix.tech
+- Location: Jaipur, Rajasthan, India
