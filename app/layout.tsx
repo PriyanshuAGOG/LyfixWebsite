@@ -11,11 +11,11 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: {
     type: "website", locale: "en_IN", url: "https://lyfix.tech", siteName: "Lyfix Technologies",
-    title: "Lyfix Technologies | Business, fixed forward.",
-    description: "One team for creative, technology, growth, AI, and operations. We build the systems businesses need next.",
+    title: "Lyfix Technologies | One connected business system.",
+    description: "We design what people see and engineer what the business runs on. Brand, digital products, growth, AI and operations in one connected partner.",
     images: [{ url: "/og.svg", width: 1200, height: 630, alt: "Lyfix Technologies, Business fixed forward" }],
   },
-  twitter: { card: "summary_large_image", title: "Lyfix Technologies | Business, fixed forward.", description: "Creative, technology, growth, AI, and operations in one connected agency.", images: ["/og.svg"] },
+  twitter: { card: "summary_large_image", title: "Lyfix Technologies | One connected business system.", description: "Brand, digital products, growth, AI and operations in one connected partner.", images: ["/og.svg"] },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
   category: "technology",
 }
@@ -29,7 +29,7 @@ const schema = {
   areaServed: ["IN", "Worldwide"],
   address: { "@type": "PostalAddress", addressLocality: "Jaipur", addressRegion: "Rajasthan", addressCountry: "IN" },
   knowsAbout: ["Web Design", "Web Development", "AI Automation", "Conversational AI", "ChatGPT Advertising", "Meta Advertising", "Shopify", "WordPress", "Brand Identity", "Packaging Design", "Video Production", "UGC Content", "Business Process Automation"],
-  slogan: "Business, fixed forward.",
+  slogan: "We design what people see. We engineer what business runs on.",
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

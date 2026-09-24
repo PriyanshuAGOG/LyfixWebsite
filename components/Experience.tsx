@@ -1,75 +1,151 @@
 "use client"
 
-import dynamic from "next/dynamic"
 import Image from "next/image"
-import { ArrowDown, ArrowUpRight, Asterisk, Menu, MoveRight, X } from "lucide-react"
+import { ArrowDown, ArrowUpRight, Menu, Plus, X } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 
-const MetalScene = dynamic(() => import("./MetalScene"), { ssr: false })
-
 const capabilities = [
-  { n: "01", title: "Brand & Experience", lead: "Make the first impression impossible to forget.", items: "Strategy · Identity · Graphic systems · Packaging · Product & book design · UGC · AI UGC · Film · Storytelling" },
-  { n: "02", title: "Platforms & Products", lead: "Digital experiences engineered for attention and action.", items: "Web design · Development · Conversational websites · Shopify · WordPress · CMS · Internal systems" },
-  { n: "03", title: "AI & Automation", lead: "Intelligence embedded where the work actually happens.", items: "Custom GPTs · AI agents · WhatsApp agents · Inbound & outbound voice · Workflow automation · AI operations" },
-  { n: "04", title: "Growth & Media", lead: "Turn a distinctive brand into measurable demand.", items: "ChatGPT Ads · Meta Ads · Instagram Ads · Campaign systems · Content engines · Conversion design" },
-  { n: "05", title: "Business Operations", lead: "Build the machine behind the beautiful front end.", items: "Automated accounting · SOP systems · Reporting · Internal tooling · Connected workflows · Process design" },
+  {
+    id: "01", key: "IDENTITY", title: "Make the business unmistakable.",
+    body: "Strategy, identity, campaign worlds, packaging, product graphics, publications, UGC and film. One visual language with enough range to grow without becoming generic.",
+    tags: ["Brand systems", "Packaging", "Graphic design", "UGC + AI UGC", "Film & storytelling"],
+  },
+  {
+    id: "02", key: "EXPERIENCE", title: "Turn attention into movement.",
+    body: "Websites, stores and products that feel specific to the brand and make complex decisions easier. Including conversational interfaces that guide, qualify and convert.",
+    tags: ["Web design", "Web development", "Conversational web", "Shopify", "WordPress + CMS"],
+  },
+  {
+    id: "03", key: "INTELLIGENCE", title: "Put AI inside the actual workflow.",
+    body: "Useful agents, not demos. Custom GPTs, WhatsApp agents, voice systems and automations connected to the tools, guardrails and hand-offs your team already uses.",
+    tags: ["Custom GPTs", "WhatsApp agents", "Inbound voice", "Outbound voice", "AI automation"],
+  },
+  {
+    id: "04", key: "DEMAND", title: "Build a repeatable path to revenue.",
+    body: "Campaign strategy, media and conversion systems operating from the same brand logic. Creative and performance stop fighting each other.",
+    tags: ["ChatGPT Ads", "Meta Ads", "Instagram Ads", "Content engines", "Conversion systems"],
+  },
+  {
+    id: "05", key: "OPERATIONS", title: "Fix what customers never see.",
+    body: "Internal tools, connected workflows, automated accounting and operating systems that reduce delay, repetitive work and avoidable human error.",
+    tags: ["Internal systems", "Accounting automation", "SOP design", "Reporting", "Workflow engineering"],
+  },
 ]
 
-const phases = [
-  ["01", "Diagnose", "Find the highest-leverage problem, not the easiest deliverable."],
-  ["02", "Architect", "Turn brand, experience, intelligence, and operations into one system."],
-  ["03", "Execute", "Senior thinkers stay close to the work from first sketch to production."],
-  ["04", "Compound", "Measure what matters, improve continuously, and make the advantage harder to copy."],
+const engagements = [
+  { number: "A", title: "Launch a new proposition", copy: "Positioning → identity → website → content → launch campaign → lead operations" },
+  { number: "B", title: "Modernise a growing company", copy: "Experience audit → digital platform → CRM workflows → AI layer → performance system" },
+  { number: "C", title: "Automate a painful operation", copy: "Process map → custom agents → internal tools → approvals → reporting and oversight" },
 ]
 
-function Logo({ light = false }: { light?: boolean }) {
-  return <a className={`brand ${light ? "brand-light" : ""}`} href="#top" aria-label="Lyfix Technologies home"><Image src="/lyfix-logo.png" alt="Lyfix Technologies" fill priority sizes="180px" /></a>
+function Brand() {
+  return <a className="brand" href="#top" aria-label="Lyfix Technologies home"><Image src="/lyfix-logo.png" alt="Lyfix Technologies" fill priority sizes="160px" /></a>
+}
+
+function RouteMap() {
+  return (
+    <svg className="route-map" viewBox="0 0 100 640" preserveAspectRatio="none" aria-hidden="true">
+      <path className="route-ghost" d="M50 0V72L18 104V184L78 244V330L31 377V470L70 509V575L50 595V640" />
+      <path className="route-live" d="M50 0V72L18 104V184L78 244V330L31 377V470L70 509V575L50 595V640" />
+      <g className="route-nodes"><circle cx="18" cy="104" r="3"/><circle cx="78" cy="244" r="3"/><circle cx="31" cy="377" r="3"/><circle cx="70" cy="509" r="3"/></g>
+    </svg>
+  )
 }
 
 export default function Experience() {
   const root = useRef<HTMLElement>(null)
+  const hero = useRef<HTMLElement>(null)
   const [menu, setMenu] = useState(false)
-  const [loaded, setLoaded] = useState(false)
+  const [active, setActive] = useState(0)
+  const [openMobile, setOpenMobile] = useState(0)
 
   useEffect(() => {
-    let cleanup = () => {}
-    Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(([gsapModule, triggerModule]) => {
-      const gsap = gsapModule.gsap
-      const ScrollTrigger = triggerModule.ScrollTrigger
+    let destroy = () => {}
+    let cancelled = false
+    Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(([g, s]) => {
+      if (cancelled) return
+      const gsap = g.gsap
+      const ScrollTrigger = s.ScrollTrigger
       gsap.registerPlugin(ScrollTrigger)
-      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches
       const ctx = gsap.context(() => {
-        const intro = gsap.timeline({ defaults: { ease: "power3.out" }, onComplete: () => setLoaded(true) })
-        intro.to(".loader-count", { textContent: 100, duration: reduced ? 0.01 : 1.2, snap: { textContent: 1 } })
-          .to(".loader-line i", { scaleX: 1, duration: reduced ? 0.01 : 1.1 }, 0)
-          .to(".loader", { yPercent: -100, duration: reduced ? 0.01 : 0.9, ease: "power4.inOut" })
-          .from(".hero-line > span", { yPercent: 120, duration: reduced ? 0.01 : 1.05, stagger: 0.11 }, "-=.25")
-          .from(".hero-meta, .hero-scroll, .site-nav", { opacity: 0, y: 18, duration: 0.65, stagger: 0.08 }, "-=.6")
-        if (!reduced) {
-          gsap.to(".hero-visual", { yPercent: 18, scale: 0.92, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } })
-          gsap.to(".hero-wordmark", { yPercent: -18, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } })
-          gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => gsap.from(element, { y: 70, opacity: 0, duration: 1.15, ease: "power3.out", scrollTrigger: { trigger: element, start: "top 87%" } }))
-          gsap.matchMedia().add("(min-width: 900px)", () => gsap.to(".chapter-track", { xPercent: -66.666, ease: "none", scrollTrigger: { trigger: ".chapter", start: "top top", end: "+=280%", scrub: 0.7, pin: true } }))
-        } else setLoaded(true)
+        gsap.set(".intro-word span", { yPercent: 115 })
+        const load = gsap.timeline({ defaults: { ease: "power4.out" } })
+        load.to(".boot-line", { scaleX: 1, duration: reduce ? 0 : .75 })
+          .to(".boot", { clipPath: "inset(0 0 100% 0)", duration: reduce ? 0 : .72, ease: "power4.inOut" })
+          .to(".intro-word span", { yPercent: 0, duration: reduce ? 0 : 1, stagger: .08 }, "-=.2")
+          .from(".hero-copy, .hero-index, .site-nav", { opacity: 0, y: 18, duration: reduce ? 0 : .6, stagger: .08 }, "-=.55")
+
+        if (!reduce) {
+          gsap.to(".route-live", { strokeDashoffset: 0, ease: "none", scrollTrigger: { trigger: root.current, start: "top top", end: "bottom bottom", scrub: .45 } })
+          gsap.to(".hero-cut", { xPercent: -6, rotate: -2, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } })
+          gsap.utils.toArray<HTMLElement>("[data-rise]").forEach((el) => gsap.from(el, { y: 55, opacity: 0, duration: .9, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%" } }))
+          gsap.utils.toArray<HTMLElement>(".cap-step").forEach((el, index) => ScrollTrigger.create({ trigger: el, start: "top 52%", end: "bottom 52%", onEnter: () => setActive(index), onEnterBack: () => setActive(index) }))
+          gsap.fromTo(".output-ticket", { xPercent: -18, rotate: -6 }, { xPercent: 4, rotate: 2, ease: "none", scrollTrigger: { trigger: ".conversion", start: "top bottom", end: "bottom top", scrub: true } })
+        }
       }, root)
-      cleanup = () => ctx.revert()
+      destroy = () => ctx.revert()
     })
-    return () => cleanup()
+    return () => { cancelled = true; destroy() }
+  }, [])
+
+  useEffect(() => {
+    const el = hero.current
+    if (!el || matchMedia("(pointer: coarse)").matches) return
+    const move = (event: PointerEvent) => {
+      const rect = el.getBoundingClientRect()
+      el.style.setProperty("--mx", `${((event.clientX - rect.left) / rect.width) * 100}%`)
+      el.style.setProperty("--my", `${((event.clientY - rect.top) / rect.height) * 100}%`)
+    }
+    el.addEventListener("pointermove", move, { passive: true })
+    return () => el.removeEventListener("pointermove", move)
   }, [])
 
   return (
-    <main ref={root} id="top" className={loaded ? "is-loaded" : ""}>
-      <div className="loader" aria-hidden="true"><div className="loader-inner"><span>LYFIX / SIGNATURE SYSTEM</span><strong className="loader-count">0</strong><div className="loader-line"><i /></div><p>Strategy · Design · Technology · Intelligence</p></div></div>
-      <header className="site-nav"><Logo light /><nav className={menu ? "menu-open" : ""} aria-label="Primary navigation"><a href="#capabilities" onClick={() => setMenu(false)}>Capabilities</a><a href="#method" onClick={() => setMenu(false)}>Method</a><a href="#contact" onClick={() => setMenu(false)}>Contact</a><a className="nav-project" href="mailto:hello@lyfix.tech?subject=Enterprise%20project%20with%20Lyfix">Start a project <ArrowUpRight size={16} /></a></nav><button className="menu-button" onClick={() => setMenu(!menu)} aria-label="Toggle navigation">{menu ? <X /> : <Menu />}</button></header>
-      <section className="hero"><div className="hero-grid" aria-hidden="true" /><div className="hero-wordmark"><h1><span className="hero-line"><span>We build</span></span><span className="hero-line"><span>businesses</span></span><span className="hero-line accent-line"><span>worth noticing.</span></span></h1><div className="hero-meta"><span>Independent enterprise studio</span><p>One senior team across brand, digital products, artificial intelligence, growth, and the operating systems behind them.</p></div></div><div className="hero-visual"><MetalScene /><div className="visual-ring"><span>LYFIX</span><span>TECHNOLOGIES</span><span>EST. FOR WHAT’S NEXT</span></div></div><a className="hero-scroll" href="#premise"><span>Scroll to enter</span><ArrowDown size={17} /></a></section>
-      <section className="premise" id="premise"><div className="eyebrow" data-reveal><span>01</span> The premise</div><h2 data-reveal>Your business does not experience <em>design</em>, <em>technology</em>, and <em>operations</em> separately.</h2><div className="premise-foot" data-reveal><p>Neither should your agency.</p><p>Lyfix connects every visible moment and every invisible system into one coherent commercial advantage.</p></div></section>
-      <section className="chapter" aria-label="The Lyfix system"><div className="chapter-track"><article className="chapter-panel chapter-dark"><span className="panel-count">01 / 03</span><div><p>FROM FIRST GLANCE</p><h2>Be <i>remembered.</i></h2></div><p className="panel-copy">A brand with a point of view. Stories with tension. Experiences with enough character to live in someone’s head after the tab is closed.</p></article><article className="chapter-panel chapter-bronze"><span className="panel-count">02 / 03</span><div><p>TO FIRST ACTION</p><h2>Move <i>people.</i></h2></div><p className="panel-copy">Websites that converse. Campaigns that understand intent. Products that make the next step feel obvious and valuable.</p></article><article className="chapter-panel chapter-light"><span className="panel-count">03 / 03</span><div><p>TO EVERY OPERATION</p><h2>Run <i>smarter.</i></h2></div><p className="panel-copy">Agents, automations, workflows, and internal systems that remove friction while keeping judgment exactly where it belongs.</p></article></div></section>
-      <section className="capabilities" id="capabilities"><div className="cap-intro" data-reveal><div className="eyebrow"><span>02</span> Capabilities</div><h2>One partner.<br /><i>The whole machine.</i></h2><p>Engage Lyfix for a defining intervention or an end-to-end transformation. The disciplines meet where the business problem demands.</p></div><div className="cap-list">{capabilities.map((cap) => <article key={cap.n} data-reveal><span>{cap.n}</span><div><h3>{cap.title}</h3><p>{cap.lead}</p><small>{cap.items}</small></div><ArrowUpRight /></article>)}</div></section>
-      <section className="signal-band"><div>{[0, 1].map((set) => <div className="signal-set" key={set}><span>CONVERSATIONAL WEBSITES</span><Asterisk /><span>CHATGPT ADS</span><Asterisk /><span>AI AGENTS</span><Asterisk /><span>BRAND SYSTEMS</span><Asterisk /><span>BUSINESS AUTOMATION</span><Asterisk /></div>)}</div></section>
-      <section className="intelligence"><div className="intelligence-head" data-reveal><div className="eyebrow"><span>03</span> Applied intelligence</div><h2>AI, without<br />the theatre.</h2><p>We design intelligence around a job to be done, a human to help, and a result the business can measure.</p></div><div className="agent-stage" data-reveal><div className="agent-orbit orbit-a"><span>VOICE</span><span>WEB</span><span>WHATSAPP</span></div><div className="agent-core"><span>LYFIX</span><strong>AGENT<br />SYSTEM</strong><small>LISTENING / LEARNING / ACTING</small></div><div className="agent-orbit orbit-b"><span>CRM</span><span>OPS</span><span>DATA</span></div><p>From a website mascot that can guide a buyer, to voice agents handling inbound and outbound calls, to custom GPTs embedded in daily operations.</p></div></section>
-      <section className="method" id="method"><div className="method-title" data-reveal><div className="eyebrow"><span>04</span> How we work</div><h2>Senior attention.<br /><i>Start to finish.</i></h2></div><div className="method-list">{phases.map(([n, title, copy]) => <article key={n} data-reveal><span>{n}</span><h3>{title}</h3><p>{copy}</p><MoveRight /></article>)}</div></section>
-      <section className="finale" id="contact"><div className="finale-light" /><p data-reveal>THE NEXT CATEGORY-DEFINING BUSINESS</p><h2 data-reveal>should be yours.</h2><a data-reveal href="mailto:hello@lyfix.tech?subject=Build%20something%20defining%20with%20Lyfix"><span>Build something defining</span><ArrowUpRight /></a></section>
-      <footer><Logo light /><p>Creative · Technology · Intelligence · Operations</p><div><a href="mailto:hello@lyfix.tech">hello@lyfix.tech</a><span>© {new Date().getFullYear()} LYFIX TECHNOLOGIES</span></div></footer>
+    <main id="top" ref={root}>
+      <div className="boot" aria-hidden="true"><span>LYFIX / CONNECTING THE BUSINESS</span><div><i className="boot-line" /></div><b>CREATIVE · TECHNOLOGY · INTELLIGENCE · OPERATIONS</b></div>
+      <RouteMap />
+      <header className="site-nav"><Brand /><nav className={menu ? "open" : ""}><a href="#system" onClick={() => setMenu(false)}>System</a><a href="#capabilities" onClick={() => setMenu(false)}>Capabilities</a><a href="#engagements" onClick={() => setMenu(false)}>Engagements</a><a className="nav-cta" href="#contact" onClick={() => setMenu(false)}>Brief us <ArrowUpRight /></a></nav><button onClick={() => setMenu(!menu)} aria-label="Toggle navigation">{menu ? <X /> : <Menu />}</button></header>
+
+      <section className="hero" ref={hero}>
+        <div className="hero-signal" aria-hidden="true"><span>BRAND</span><span>PRODUCT</span><span>AI</span><span>GROWTH</span><span>OPS</span></div>
+        <div className="hero-title"><h1><span className="intro-word"><span>WE DESIGN</span></span><span className="intro-word outline"><span>WHAT PEOPLE SEE.</span></span><span className="intro-word shift"><span>WE ENGINEER</span></span><span className="intro-word copper"><span>WHAT BUSINESS RUNS ON.</span></span></h1></div>
+        <div className="hero-cut" aria-hidden="true"><b>LY</b><i /><b>FIX</b><small>ONE CONNECTED COMPANY</small></div>
+        <div className="hero-copy"><span>INDEPENDENT ENTERPRISE PARTNER / INDIA + WORLDWIDE</span><p>Lyfix connects brand, digital products, growth, AI and operations, so companies stop managing five disconnected vendors and start moving as one.</p></div>
+        <div className="hero-index"><span>SCROLL</span><ArrowDown /></div>
+      </section>
+
+      <section className="thesis" id="system">
+        <div className="section-tag" data-rise><span>01</span> THE DISCONNECT</div>
+        <div className="thesis-grid"><p data-rise>Most companies are not short on vendors.</p><h2 data-rise>They are short on <strong>connection.</strong></h2><div className="broken-stack" data-rise><span>BRAND <i>↗</i></span><span>WEBSITE <i>↙</i></span><span>MARKETING <i>→</i></span><span>AI <i>↖</i></span><span>OPERATIONS <i>↓</i></span></div><p className="thesis-note" data-rise>Every hand-off dilutes the idea, slows the work, and creates another place for accountability to disappear.</p></div>
+      </section>
+
+      <section className="splice" aria-label="The Lyfix difference"><div className="splice-left"><span>WITHOUT LYFIX</span><h2>Five agencies.<br/>Seven tools.<br/>No owner.</h2></div><div className="splice-mark" aria-hidden="true"><span>L</span><i/><span>X</span></div><div className="splice-right"><span>WITH LYFIX</span><h2>One logic.<br/>One system.<br/>One outcome.</h2></div></section>
+
+      <section className="capabilities" id="capabilities">
+        <div className="cap-sticky"><div className="section-tag"><span>02</span> THE CONNECTION LAYER</div><div className="cap-counter">{capabilities[active].id}<small>/05</small></div><h2>{capabilities[active].key}</h2><div className="cap-pulse" aria-hidden="true"><i/><i/><i/><b>{capabilities[active].id}</b></div></div>
+        <div className="cap-steps">
+          {capabilities.map((cap, index) => <article className={`cap-step ${active === index ? "active" : ""}`} key={cap.id} onClick={() => setOpenMobile(openMobile === index ? -1 : index)}><header><span>{cap.id}</span><h3>{cap.key}</h3><button aria-label={`${openMobile === index ? "Close" : "Open"} ${cap.key}`}><Plus /></button></header><div className={openMobile === index ? "mobile-open" : ""}><h4>{cap.title}</h4><p>{cap.body}</p><ul>{cap.tags.map(tag => <li key={tag}>{tag}</li>)}</ul></div></article>)}
+        </div>
+      </section>
+
+      <section className="conversion">
+        <div className="section-tag" data-rise><span>03</span> WHAT CONNECTED LOOKS LIKE</div>
+        <div className="conversion-head"><h2 data-rise>One business problem goes in.</h2><h2 data-rise>A working system comes out.</h2></div>
+        <div className="input-ticket" data-rise><span>INPUT / 001</span><strong>“Our growth has outpaced the way we look, sell and operate.”</strong><small>AMBITION · FRICTION · COMPLEXITY</small></div>
+        <div className="processor" aria-hidden="true"><span>DIAGNOSE</span><i/><span>DESIGN</span><i/><span>BUILD</span><i/><span>OPERATE</span></div>
+        <div className="output-ticket"><span>LYFIX OUTPUT / LIVE</span><strong>A brand customers remember.<br/>A platform that converts.<br/>An operation that scales.</strong><small>ONE ACCOUNTABLE SYSTEM</small></div>
+      </section>
+
+      <section className="engagements" id="engagements">
+        <div className="engagement-title"><div className="section-tag" data-rise><span>04</span> WAYS TO USE LYFIX</div><h2 data-rise>Bring us the part.<br/><span>Or bring us the mess.</span></h2></div>
+        <div className="engagement-list">{engagements.map(item => <article key={item.number} data-rise><span>{item.number}</span><h3>{item.title}</h3><p>{item.copy}</p><ArrowUpRight /></article>)}</div>
+      </section>
+
+      <section className="proof-principle"><p>THE PRINCIPLE</p><h2 data-rise>Beautiful is not the outcome.<br/><span>Business movement is.</span></h2><div><span>NO DECORATION WITHOUT A JOB.</span><span>NO AUTOMATION WITHOUT OVERSIGHT.</span><span>NO CAMPAIGN WITHOUT A SYSTEM.</span></div></section>
+
+      <section className="contact" id="contact"><div className="contact-code">LF/X<br/>05</div><p>Have a serious business problem?</p><h2>Let&apos;s fix<br/><span>the whole thing.</span></h2><a href="mailto:hello@lyfix.tech?subject=Enterprise%20brief%20for%20Lyfix"><span>hello@lyfix.tech</span><ArrowUpRight /></a></section>
+      <footer><Brand/><span>JAIPUR / INDIA / WORLDWIDE</span><span>© {new Date().getFullYear()} LYFIX TECHNOLOGIES</span></footer>
     </main>
   )
 }

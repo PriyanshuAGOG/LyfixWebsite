@@ -1,9 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <defs><radialGradient id="g" cx="78%" cy="34%"><stop stop-color="#b88a58" stop-opacity=".66"/><stop offset=".36" stop-color="#302217" stop-opacity=".5"/><stop offset="1" stop-color="#090909" stop-opacity="0"/></radialGradient></defs>
-  <rect width="1200" height="630" fill="#090909"/><rect width="1200" height="630" fill="url(#g)"/>
-  <g stroke="#f1eee7" opacity=".09"><path d="M300 0v630M600 0v630M900 0v630"/></g>
-  <circle cx="954" cy="194" r="108" fill="none" stroke="#d8b183" opacity=".4"/><circle cx="954" cy="194" r="72" fill="none" stroke="#d8b183" opacity=".18"/>
-  <text x="64" y="78" fill="#d8b183" font-family="Arial" font-size="18" letter-spacing="5">LYFIX TECHNOLOGIES</text>
-  <text x="62" y="315" fill="#f1eee7" font-family="Georgia" font-size="92">We build businesses</text><text x="62" y="414" fill="#d8b183" font-family="Georgia" font-size="105" font-style="italic">worth noticing.</text>
-  <text x="66" y="548" fill="#f1eee7" opacity=".54" font-family="Arial" font-size="16" letter-spacing="3">CREATIVE · TECHNOLOGY · INTELLIGENCE · OPERATIONS</text>
+  <rect width="1200" height="630" fill="#090909"/>
+  <g stroke="#f2f0ea" opacity=".09"><path d="M0 126h1200M0 252h1200M0 378h1200M0 504h1200M600 0v630"/></g>
+  <path d="M926 0 742 315l184 315h274V0Z" fill="#f2f0ea"/>
+  <path d="m922 132-104 183 104 183" fill="none" stroke="#b47d48" stroke-width="28"/>
+  <text x="54" y="64" fill="#b47d48" font-family="Courier New" font-size="16" letter-spacing="3">LYFIX TECHNOLOGIES / ONE CONNECTED SYSTEM</text>
+  <text x="50" y="214" fill="#f2f0ea" font-family="Arial" font-weight="900" font-size="80" letter-spacing="-5">WE DESIGN WHAT</text>
+  <text x="50" y="294" fill="none" stroke="#f2f0ea" stroke-width="1.5" font-family="Arial" font-weight="900" font-size="80" letter-spacing="-5">PEOPLE SEE.</text>
+  <text x="50" y="412" fill="#f2f0ea" font-family="Arial" font-weight="900" font-size="80" letter-spacing="-5">WE ENGINEER WHAT</text>
+  <text x="50" y="492" fill="#b47d48" font-family="Arial" font-weight="900" font-size="80" letter-spacing="-5">BUSINESS RUNS ON.</text>
+  <text x="54" y="572" fill="#f2f0ea" opacity=".55" font-family="Courier New" font-size="14" letter-spacing="2">BRAND · DIGITAL PRODUCTS · GROWTH · AI · OPERATIONS</text>
 </svg>
